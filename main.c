@@ -1,3 +1,7 @@
+#ifdef __linux
+
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -24,3 +28,5 @@ int main(int argc,char **argv){
     free(buffer);
     return 0;
 }
+
+#endif
