@@ -51,12 +51,13 @@ int main(int argc,char **argv){
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <fcntl.h>
 
 #pragma comment (lib,"lws2_32")
 
 int main(int args,char **argv){
     if(args < 2){
-        printf("Error Argument\n")
+        printf("Error Argument\n");
         return 1;
     }
 
@@ -75,6 +76,8 @@ int main(int args,char **argv){
         close(fd);
         return 1;
     }
+
+    read(fd,buffer,len);
 
     write(STDOUT_FILENO,buffer,len);
     fflush(stdout);
