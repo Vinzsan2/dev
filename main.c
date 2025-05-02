@@ -44,3 +44,43 @@ int main(int argc,char **argv){
 }
 
 #endif
+
+#ifdef __WIN32
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
+#pragma comment (lib,"lws2_32")
+
+int main(int args,char **argv){
+    if(args < 2){
+        printf("Error Argument\n")
+        return 1;
+    }
+
+    int fd = open(argv[1],O_RDONLY);
+    if(fd < 0){
+        perror("Error File not Found\n");
+        return 1;
+    }
+
+    size_t len = lseek(fd,0,SEEK_END);
+    lseek(fd,0,SEEK_SET);
+
+    char *buffer = malloc(len);
+    if(buffer < 0){
+        perror("Error Heap\n");
+        close(fd);
+        return 1;
+    }
+
+    write(STDOUT_FILENO,buffer,len);
+    fflush(stdout);
+    free(buffer);
+    close(fd);
+    return 0;
+}
+
+#endif
