@@ -20,13 +20,24 @@ void *new_(int size){
     return buffer;
 }
 
+void delete(void *buffer){
+    if(buffer == NULL){
+        printf("Error");
+        return 1;
+    }
+    printf("Delete Memory : %p",buffer);
+    free(buffer);
+}
+
 typedef struct {
-    void *(*new)(int);
+    void *(*New)(int);
+    void (*Delete)(void *);
 } Std;
 
-static Std System = { new_ };
+static Std System = { new_ ,delete};
 
 int main(){
-    // Here your Test
+    char *buffer = System.New(1024);
+    System.Delete(buffer);
     return 0;
 }
